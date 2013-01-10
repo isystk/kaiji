@@ -1,8 +1,8 @@
-section h1,
-section p,
-section li,
-section dt,
-section dd {
+h1,
+p,
+li,
+dt,
+dd {
     -webkit-transition-property: -webkit-transform, opacity, color;
             transition-property:         transform, opacity, color;
     -webkit-transition-duration: 1.5s; 
@@ -12,29 +12,3 @@ section dd {
             transition-timing-function: cubic-bezier(0.610, -0.220, 0.555, 1.105);
 }
 
-section,
-section section {
-    -webkit-transform-style: preserve-3d;
-}
-
-/* Use javascript */
-
-.transition-enable {
-    -webkit-transition-property: -webkit-transform, opacity;
-            transition-property:         transform, opacity;
-    -webkit-transition-duration: 1.5s; 
-            transition-duration: 1.5s;
-    -webkit-transition-timing-function: cubic-bezier(0, .99, .17, 1); 
-            transition-timing-function: cubic-bezier(0, .99, .17, 1);
-}
-
-.animation-enable {
-    -webkit-animation: rot 10s linear infinite;
-            animation: rot 10s linear infinite;
-}
-
-.inactive {
-    -webkit-animation: rot 60s linear infinite;
-            animation: rot 60s linear infinite;
-    /*-webkit-filter: blur(2px) !important;*/
-}
