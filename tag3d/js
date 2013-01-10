@@ -8,8 +8,9 @@ function initialise() {
 
 	var range = $(window).width();
 
+	var images = $('h1, p, li, dt, dd');
+
 	$('body').click(function() {
-		var images = $('h1, p, li, dt, dd');
 		images.each(function() {
 			var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
@@ -32,18 +33,6 @@ function initialise() {
 				'rotateZ(' + randInt(360, -360) +  'deg) ';
 			css.opacity = 0.5;
 			$(this).css('webkit-transform', css);
-		});
-
-		var images = $('h1, p, li, dt, dd');
-		images.each(function() {
-			var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
-				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
-			css.opacity = 1;
-			$(this).css('webkit-transform', css);
-			$(this)
-				.addClass('transition-enable')
-				.removeClass('inactive')
-				.css({ opacity: 1, zIndex: 99 });
 		});
 
 	});
