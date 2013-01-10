@@ -1,59 +1,44 @@
 
-loadCss('http://isystk.github.com/tag3d/css');
+document.write('<link href="http://isystk.github.com/tag3d/css" rel="stylesheet" type="text/css" media="all" />');
+window.jQuery || document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>');
 
-var range = $(window).width();
+$(initialise);
 
-var images = $('h1, p, li, dt, dd');
-images.each(function() {
-	var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
-		'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
-	css.opacity = 1;
-	$(this).css('webkit-transform', css);
-	$(this)
-		.addClass('transition-enable')
-		.removeClass('inactive')
-		.css({ opacity: 1, zIndex: 99 });
-});
+function initialise() {
 
+	var range = $(window).width();
 
-$('body').click(function() {
-	// 要素をランダム配置$
+	var images = $('h1, p, li, dt, dd');
 	images.each(function() {
-		// 要素をランダム配置$
-		var css = 'translateX(' + randInt(range, -range) + 'px) '+
-			'translateY(' + randInt(range * 0.5, -range) + 'px) '+
-			'translateZ(' + randInt(range, -range) + 'px) '+
-			'rotateX(' + randInt(360, -360) +  'deg) ' +
-			'rotateY(' + randInt(360, -360) +  'deg) ' +
-			'rotateZ(' + randInt(360, -360) +  'deg) ';
-		css.opacity = 0.5;
+		var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
+			'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+		css.opacity = 1;
 		$(this).css('webkit-transform', css);
+		$(this)
+			.addClass('transition-enable')
+			.removeClass('inactive')
+			.css({ opacity: 1, zIndex: 99 });
 	});
-});
 
+	$('body').click(function() {
+		// 要素をランダム配置$
+		images.each(function() {
+			// 要素をランダム配置$
+			var css = 'translateX(' + randInt(range, -range) + 'px) '+
+				'translateY(' + randInt(range * 0.5, -range) + 'px) '+
+				'translateZ(' + randInt(range, -range) + 'px) '+
+				'rotateX(' + randInt(360, -360) +  'deg) ' +
+				'rotateY(' + randInt(360, -360) +  'deg) ' +
+				'rotateZ(' + randInt(360, -360) +  'deg) ';
+			css.opacity = 0.5;
+			$(this).css('webkit-transform', css);
+		});
+	});
 
-function randInt(max, min) {
-	if (min === undefined) min = 0;
-	return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-
-function loadCss(href, check) {
-
-	if(typeof(check) == 'undefined') check = true;
-
-	var head = document.getElementsByTagName('head')[0];
-	var link = document.createElement('link');
-	link.rel = 'stylesheet';
-	link.type = 'text/css';
-	link.href = href;
-
-	if(check) {
-		var links = head.getElementsByTagName('link');
-		for(var i = 0; i < links.length; i++) {
-			if(links[i].href == link.href) return false;
-		}
+	function randInt(max, min) {
+		if (min === undefined) min = 0;
+		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
 
-	head.appendChild(link);
+
 }
