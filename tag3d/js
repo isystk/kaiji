@@ -1,21 +1,50 @@
 
-loadjscssfile('http://isystk.github.com/tag3d/css', 'css');
 window.jQuery || loadjscssfile('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'js');
+window.Isystk || loadjscssfile('http://isystk.github.com/js/isystk.js', 'js');
 
-$(initialise);
 
+// JSファイルがロードされるまで待機する
+(function() {
+	var timer = undefined;
+	var waitjs =  function() {
+		if( typeof( jQuery ) === 'undefined' ||
+			typeof( Isystk ) === 'undefined' ) {
+			timer = setTimeout( waitjs, 0 );
+		} else {
+			clearTimeout(timer);
+			$(initialise);
+		}
+	};
+	waitjs();
+})();
+
+
+// 初期処理
 function initialise() {
 
 	var range = $(window).width();
 
-	var images = $('h1, p, li, dt, dd');
+	var target = $('h1, p, li, dt, dd');
+
+	target.each(function() {
+		var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
+			'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+		css.opacity = 1;
+		$(this).css(Isystk.Vendor.getProperty('transition-property'), '-' + Isystk.Vendor.prefix + 'transform, opacity, color')
+		.css(Isystk.Vendor.getProperty('transition-duration'), '1.5s')
+		.css(Isystk.Vendor.getProperty('transition-timing-function'), 'cubic-bezier(0.610, -0.220, 0.555, 1.105)');
+		$(this)
+			.addClass('transition-enable')
+			.removeClass('inactive')
+			.css({ opacity: 1, zIndex: 99 });
+	});
 
 	$('body').click(function() {
-		images.each(function() {
+		target.each(function() {
 			var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
 			css.opacity = 1;
-			$(this).css('webkit-transform', css);
+			$(this).css(Isystk.Vendor.getProperty('transform'), css);
 			$(this)
 				.addClass('transition-enable')
 				.removeClass('inactive')
@@ -23,26 +52,22 @@ function initialise() {
 		});
 
 		// 要素をランダム配置$
-		images.each(function() {
+		target.each(function() {
 			// 要素をランダム配置$
-			var css = 'translateX(' + randInt(range, -range) + 'px) '+
-				'translateY(' + randInt(range * 0.5, -range) + 'px) '+
-				'translateZ(' + randInt(range, -range) + 'px) '+
-				'rotateX(' + randInt(360, -360) +  'deg) ' +
-				'rotateY(' + randInt(360, -360) +  'deg) ' +
-				'rotateZ(' + randInt(360, -360) +  'deg) ';
+			var css = 'translateX(' + Isystk.randInt(range, -range) + 'px) '+
+				'translateY(' + Isystk.randInt(range * 0.5, -range) + 'px) '+
+				'translateZ(' + Isystk.randInt(range, -range) + 'px) '+
+				'rotateX(' + Isystk.randInt(360, -360) +  'deg) ' +
+				'rotateY(' + Isystk.randInt(360, -360) +  'deg) ' +
+				'rotateZ(' + Isystk.randInt(360, -360) +  'deg) ';
 			css.opacity = 0.5;
-			$(this).css('webkit-transform', css);
+			$(this).css(Isystk.Vendor.getProperty('transform'), css);
 		});
 
 	});
 
-	function randInt(max, min) {
-		if (min === undefined) min = 0;
-		return Math.floor(Math.random() * (max - min + 1) + min);
-	}
-
 }
+
 
 // JS・CSSファイルを動的にロードします。
 function loadjscssfile(filename, filetype){
