@@ -28,6 +28,7 @@ function loadjscssfile(filename, filetype){
 			timer = setTimeout( waitjs, 0 );
 		} else {
 			clearTimeout(timer);
+			$ = jQuery;
 			$(initialise);
 		}
 	};
@@ -38,63 +39,65 @@ function loadjscssfile(filename, filetype){
 // 初期処理
 function initialise() {
 
-	//var range = $(window).width();
-	//var target = $('h1, p, li, dt, dd');
-	var range = $('#inspirations').width();
-	var target = $('#inspirations li');
+	var range = $(window).width();
+	var target = $('h1, p, li, dt, dd');
 
 	target.each(function(i) {
-		setKeyframe(i);
-		$(this).css('-webkit-animation-name', 'move'+i)
-		.css('-webkit-animation-timing-function', 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
-		.css('-webkit-animation-duration', '10.0s')
-		.css('-webkit-animation-iteration-count', 'infinite');
-	});
+		var $this = $(this),
+		// 要素をランダム配置
+		getRandomPosition = function() {
+			return 'translateX(' + Isystk.randInt(range, -range) + 'px) '+
+				'translateY(' + Isystk.randInt(range, -range) + 'px) '+
+				'translateZ(' + Isystk.randInt(range, -range) + 'px) '+
+				'rotateX(' + Isystk.randInt(360, -360) +  'deg) ' +
+				'rotateY(' + Isystk.randInt(360, -360) +  'deg) ' +
+				'rotateZ(' + Isystk.randInt(360, -360) +  'deg) ';
+		},
+		position1 = getRandomPosition(),
+		position2 = getRandomPosition(),
+		position3 = getRandomPosition();
 
-	target.each(function() {
-		$(this).css(Isystk.Vendor.getProperty('transition-property'), Isystk.Vendor.prefix + 'transform, opacity')
+		// トランジションでランダムな位置に１度だけ移動させる
+		$this.css(Isystk.Vendor.getProperty('transition-property'), Isystk.Vendor.getProperty('transform'))
 		.css(Isystk.Vendor.getProperty('transition-duration'), '3.0s')
-		.css(Isystk.Vendor.getProperty('transition-timing-function'), 'cubic-bezier(0.0, 0.0, 1.0, 1.0)');
+		.css(Isystk.Vendor.getProperty('transition-timing-function'), 'cubic-bezier(0.610, -0.220, 0.555, 1.105)')
+		.css(Isystk.Vendor.getProperty('transform'), position1)
+		// トランジション終了時にアニメーションに処理を移行する
+		.bind(Isystk.Vendor.transitionend, randomAnimation);
 
-		var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
-			'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
-		css.opacity = 1;
-		$(this).css(Isystk.Vendor.getProperty('transform'), css);
+		// アニメーションでランダムな位置に連続で移動させる
+		function randomAnimation() {
+			var keyframe = [
+				'0% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }',
+				'30% {'+Isystk.Vendor.getProperty('transform')+': '+position2+' }',
+				'60% {'+Isystk.Vendor.getProperty('transform')+': '+position3+' }',
+				'100% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }'
+			];
+			var cssAnimation = document.createElement('style');
+			cssAnimation.type = 'text/css';
+			var rules = document.createTextNode(Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
+				keyframe.join(" ") +
+				'}');
+			cssAnimation.appendChild(rules);
+			document.getElementsByTagName("head")[0].appendChild(cssAnimation);
+			$this.css(Isystk.Vendor.getProperty('animation-name'), 'move'+i)
+			.css(Isystk.Vendor.getProperty('animation-timing-function'), 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
+			.css(Isystk.Vendor.getProperty('animation-duration'), '60.0s')
+			.css(Isystk.Vendor.getProperty('animation-iteration-count'), 'infinite');
+		}
+
 	});
 
-	// 右クリックで元に戻す
-	$('body').bind('contextmenu', function(e) {
+	// クリックでランダムに配置
+	$('body').click(function(e) {
 		e.preventDefault();
 		target.each(function() {
-			$(this).css('-webkit-animation-name', '');
 			var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
-			css.opacity = 1;
-			$(this).css(Isystk.Vendor.getProperty('transform'), css);
+			$(this).css(Isystk.Vendor.getProperty('animation-name'), '')
+			.css(Isystk.Vendor.getProperty('transform'), css);
 		});
 	});
-
-	function setKeyframe(i) {
-		// 要素をランダム配置$
-		var css = 'translateX(' + Isystk.randInt(range, -range) + 'px) '+
-			'translateY(' + Isystk.randInt(range, -range) + 'px) '+
-			'translateZ(' + Isystk.randInt(range, -range) + 'px) '+
-			'rotateX(' + Isystk.randInt(360, -360) +  'deg) ' +
-			'rotateY(' + Isystk.randInt(360, -360) +  'deg) ' +
-			'rotateZ(' + Isystk.randInt(360, -360) +  'deg) ';
-		var keyframe = [
-			'0% { -webkit-transform: translateX(0px) translateY(-200px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) }',
-			'50% { -webkit-transform: '+css+' }',
-			'100% { -webkit-transform: translateX(0px) translateY(-200px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) }'
-		];
-		var cssAnimation = document.createElement('style');
-		cssAnimation.type = 'text/css';
-		var rules = document.createTextNode('@-webkit-keyframes move'+i+' {'+
-			keyframe.join(" ")+
-			'}');
-		cssAnimation.appendChild(rules);
-		document.getElementsByTagName("head")[0].appendChild(cssAnimation);
-	}
 
 }
 
