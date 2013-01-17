@@ -101,7 +101,7 @@ Kaiji.prototype.zawazawa = function () {
 // Web画面上のコンテンツを浮遊させます。
 Kaiji.prototype.breakcontents = function() {
 	var range = $(window).width();
-	var target = $('h1, p, li, dt, dd');
+	var target = $('h1, h2, h3, h4, h5, p, li, dt, dd, pre, aside');
 
 	target.each(function(i) {
 		var $this = $(this),
