@@ -1,1 +1,0 @@
-javascript:(function(){var%20s=document.createElement('scr'+'ipt');s.charset='UTF-8';s.language='javascr'+'ipt';s.type='text/javascr'+'ipt';var%20d=new%20Date;s.src='http://isystk.github.com/tag3d/js?u='+escape(document.location.href)+'&amp;d='+d.getMilliseconds();document.body.appendChild(s);})();

@@ -36,9 +36,70 @@ function loadjscssfile(filename, filetype){
 })();
 
 
-// 初期処理
 function initialise() {
+	new Kaiji().run();
+}
 
+function Kaiji() {
+	this.setting = {
+		url : 'http://isystk.github.com/kaiji/',
+		img : {
+			zawa: 'img/zawa.jpg',
+			ise: 'img/isystk.png'
+		}
+	};
+	this.getImage = function(name) {
+		return this.setting.url + this.setting.img[name];
+	};
+}
+
+
+// 処理を実行します
+Kaiji.prototype.run = function () {
+	var kaiji = this,
+		interval = 3000,
+		initinterval = interval,
+		timer = undefined,
+		excute =  function() {
+			if( 0 < interval ) {
+				// 徐々にざわざわを増やしていく
+				for (var i=0;i<(initinterval / interval); i++) {
+					kaiji.zawazawa();
+				}
+				timer = setTimeout( excute, interval );
+				interval = interval - 300;
+			} else {
+				clearTimeout(timer);
+				// ざわざわが終わったら、Webコンテンツを浮遊させる
+				kaiji.breakcontents();
+			}
+		};
+	excute();
+};
+
+// 画面表示エリアに「ざわ」を表示します。
+Kaiji.prototype.zawazawa = function () {
+	var width = $(window).width(), // 表示領域幅
+		height = $(window).height(), // 表示領域高さ
+		scrollTop = $(window).scrollTop(), // スクロール上位置
+		scrollLeft = $(window).scrollLeft(); // スクロール左位置
+
+	var $img = $('<p><img src="'+ this.getImage('zawa')+'" width="'+256+'"></p>');
+	$img.css('position', 'absolute')
+	.css('top', Isystk.randInt(scrollTop, scrollTop+height-$img.height()))
+	.css('left', Isystk.randInt(scrollLeft+width-$img.width()))
+	.css('z-index', 9999)
+	.css('display', 'none')
+	.appendTo('body')
+	.fadeIn(2000, function () {
+		$(this).fadeOut(2000, function() {
+			$(this).remove();
+		});
+	});
+};
+
+// Web画面上のコンテンツを浮遊させます。
+Kaiji.prototype.breakcontents = function() {
 	var range = $(window).width();
 	var target = $('h1, p, li, dt, dd');
 
@@ -88,17 +149,17 @@ function initialise() {
 
 	});
 
-	// クリックでランダムに配置
+	// クリックで元の位置に配置
 	$('body').click(function(e) {
 		e.preventDefault();
 		target.each(function() {
 			var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
-			$(this).css(Isystk.Vendor.getProperty('animation-name'), '')
+			$(this).unbind(Isystk.Vendor.transitionend)
+			.css(Isystk.Vendor.getProperty('animation-name'), '')
 			.css(Isystk.Vendor.getProperty('transform'), css);
 		});
 	});
-
-}
+};
 
 
