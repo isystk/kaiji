@@ -42,10 +42,10 @@ function initialise() {
 
 function Kaiji() {
 	this.setting = {
-		url : 'http://isystk.github.com/kaiji/',
+		url : 'http://aws.ise-web.com/isystk.github.com/kaiji/',
 		img : {
 			zawa: 'img/zawa.jpg',
-			ise: 'img/isystk.png'
+			kaiji: 'img/kaiji.png'
 		}
 	};
 	this.getImage = function(name) {
@@ -57,7 +57,7 @@ function Kaiji() {
 // 処理を実行します
 Kaiji.prototype.run = function () {
 	var kaiji = this,
-		interval = 3000,
+		interval = 5000,
 		initinterval = interval,
 		timer = undefined,
 		excute =  function() {
@@ -67,84 +67,107 @@ Kaiji.prototype.run = function () {
 					kaiji.zawazawa();
 				}
 				timer = setTimeout( excute, interval );
-				interval = interval - 300;
+				interval = interval - 500;
 			} else {
 				clearTimeout(timer);
 				// ざわざわが終わったら、Webコンテンツを浮遊させる
-				kaiji.breakcontents();
+				kaiji.zawazawa(function() {
+					kaiji.breakcontents();
+				});
 			}
 		};
 	excute();
 };
 
 // 画面表示エリアに「ざわ」を表示します。
-Kaiji.prototype.zawazawa = function () {
+Kaiji.prototype.zawazawa = function (callback) {
 	var width = $(window).width(), // 表示領域幅
 		height = $(window).height(), // 表示領域高さ
 		scrollTop = $(window).scrollTop(), // スクロール上位置
 		scrollLeft = $(window).scrollLeft(); // スクロール左位置
 
-	var $img = $('<p><img src="'+ this.getImage('zawa')+'" width="'+256+'"></p>');
-	$img.css('position', 'absolute')
-	.css('top', Isystk.randInt(scrollTop, scrollTop+height-$img.height()))
-	.css('left', Isystk.randInt(scrollLeft+width-$img.width()))
-	.css('z-index', 9999)
+	$('<img src="'+ this.getImage('zawa')+'" width="'+256+'" />')
 	.css('display', 'none')
-	.appendTo('body')
-	.fadeIn(2000, function () {
-		$(this).fadeOut(2000, function() {
-			$(this).remove();
+	.bind('load', function() {
+		var $img = $(this);
+		$img.css('position', 'absolute')
+		.css('top', Isystk.randInt(scrollTop, scrollTop+height-$img.height()))
+		.css('left', Isystk.randInt(scrollLeft, scrollLeft+width-$img.width()))
+		.css(Isystk.Vendor.getProperty('border-radius'), '20px')
+		.css('z-index', 9999)
+		.fadeIn(2000, function () {
+			$(this).fadeOut(2000, function() {
+				$(this).remove();
+				// コールバックが指定されている場合は実行
+				if (callback) {
+					callback();
+				}
+			});
 		});
-	});
+	})
+	.appendTo('body');
 };
 
 // Web画面上のコンテンツを浮遊させます。
 Kaiji.prototype.breakcontents = function() {
-	var range = $(window).width();
-	var target = $('h1, h2, h3, h4, h5, p, li, dt, dd, pre, aside');
+	var kaiji = this,
+		width = $(window).width(), // 表示領域幅
+		height = $(window).height(), // 表示領域高さ
+		scrollTop = $(window).scrollTop(), // スクロール上位置
+		scrollLeft = $(window).scrollLeft(), // スクロール左位置
+		target = $('h1, h2, h3, h4, h5, p, li, dt, dd, pre, aside');
 
 	target.each(function(i) {
-		var $this = $(this),
-		// 要素をランダム配置
-		getRandomPosition = function() {
-			return 'translateX(' + Isystk.randInt(range, -range) + 'px) '+
-				'translateY(' + Isystk.randInt(range, -range) + 'px) '+
-				'translateZ(' + Isystk.randInt(range, -range) + 'px) '+
+		var $this = $(this);
+			offset = $this.offset();
+
+		// 要素をランダムに配置するCSSを生成
+		var getRandomPosition = function() {
+			return 'translateX(' + Isystk.randInt(-width+offset.left, width-offset.left) + 'px) '+
+				'translateY(' + Isystk.randInt(-height+offset.top, height-offset.left) + 'px) '+
+				'translateZ(' + Isystk.randInt(999, -999) + 'px) '+
 				'rotateX(' + Isystk.randInt(360, -360) +  'deg) ' +
 				'rotateY(' + Isystk.randInt(360, -360) +  'deg) ' +
 				'rotateZ(' + Isystk.randInt(360, -360) +  'deg) ';
-		},
-		position1 = getRandomPosition(),
-		position2 = getRandomPosition(),
-		position3 = getRandomPosition();
+		};
+
+		var firstPosition = getRandomPosition();
 
 		// トランジションでランダムな位置に１度だけ移動させる
 		$this.css(Isystk.Vendor.getProperty('transition-property'), Isystk.Vendor.getProperty('transform'))
 		.css(Isystk.Vendor.getProperty('transition-duration'), '3.0s')
 		.css(Isystk.Vendor.getProperty('transition-timing-function'), 'cubic-bezier(0.610, -0.220, 0.555, 1.105)')
-		.css(Isystk.Vendor.getProperty('transform'), position1)
+		.css(Isystk.Vendor.getProperty('transform'), firstPosition)
 		// トランジション終了時にアニメーションに処理を移行する
 		.bind(Isystk.Vendor.transitionend, randomAnimation);
 
 		// アニメーションでランダムな位置に連続で移動させる
 		function randomAnimation() {
-			var keyframe = [
-				'0% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }',
-				'30% {'+Isystk.Vendor.getProperty('transform')+': '+position2+' }',
-				'60% {'+Isystk.Vendor.getProperty('transform')+': '+position3+' }',
-				'100% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }'
-			];
-			var cssAnimation = document.createElement('style');
-			cssAnimation.type = 'text/css';
-			var rules = document.createTextNode(Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
-				keyframe.join(" ") +
-				'}');
-			cssAnimation.appendChild(rules);
-			document.getElementsByTagName("head")[0].appendChild(cssAnimation);
+
+			// キーフレームを生成
+			(function() {
+				var keyframe = [
+					'0% {'+Isystk.Vendor.getProperty('transform')+': '+firstPosition+' }',
+					'30% {'+Isystk.Vendor.getProperty('transform')+': '+getRandomPosition()+' }',
+					'60% {'+Isystk.Vendor.getProperty('transform')+': '+getRandomPosition()+' }',
+					'100% {'+Isystk.Vendor.getProperty('transform')+': '+firstPosition+' }'
+				];
+				var cssAnimation = document.createElement('style');
+				cssAnimation.type = 'text/css';
+				var rules = document.createTextNode(Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
+					keyframe.join(" ") +
+					'}');
+				cssAnimation.appendChild(rules);
+				document.getElementsByTagName("head")[0].appendChild(cssAnimation);
+			})();
+
 			$this.css(Isystk.Vendor.getProperty('animation-name'), 'move'+i)
 			.css(Isystk.Vendor.getProperty('animation-timing-function'), 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
 			.css(Isystk.Vendor.getProperty('animation-duration'), '60.0s')
 			.css(Isystk.Vendor.getProperty('animation-iteration-count'), 'infinite');
+
+			// カイジ登場
+			kaiji.showKaiji();
 		}
 
 	});
@@ -159,7 +182,41 @@ Kaiji.prototype.breakcontents = function() {
 			.css(Isystk.Vendor.getProperty('animation-name'), '')
 			.css(Isystk.Vendor.getProperty('transform'), css);
 		});
+		$('.kaiji').fadeOut(2000, function() {
+			$(this).remove();
+		});
 	});
 };
 
+// カイジを表示します
+Kaiji.prototype.showKaiji = function() {
+	var kaiji = this,
+		width = $(window).width(), // 表示領域幅
+		height = $(window).height(), // 表示領域高さ
+		scrollTop = $(window).scrollTop(), // スクロール上位置
+		scrollLeft = $(window).scrollLeft(); // スクロール左位置
 
+	$('<img class="kaiji" src="'+ this.getImage('kaiji')+'" width="'+256+'" />')
+	.css('display', 'none')
+	.bind('load', function() {
+		var $img = $(this);
+		$img.css('position', 'absolute')
+		.css('top', scrollTop+height-$img.height())
+		.css('left', scrollLeft+width-$img.width())
+		.css('z-index', 9999)
+		.fadeIn(3000, function () {
+			$('<div class="kaiji">Hacked by ISE<br/>クリックすると元に戻るよ!!</div>').css('position', 'absolute')
+			.css('top', scrollTop+height-$img.height()-50)
+			.css('left', scrollLeft+width-$img.width()-200)
+			.css('z-index', 9999)
+			.css('font-size', '20px')
+			.css('color', '#000000')
+			.css('background', '#ffffff')
+			.css('border', '4px solid #000000')
+			.css(Isystk.Vendor.getProperty('border-radius'), '10px')
+			.appendTo('body');
+		});
+	})
+	.appendTo('body');
+
+};
