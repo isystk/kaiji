@@ -42,7 +42,7 @@ function initialise() {
 
 function Kaiji() {
 	this.setting = {
-		url : 'http://aws.ise-web.com/isystk.github.com/kaiji/',
+		url : 'http://isystk.github.com/kaiji/',
 		img : {
 			zawa: 'img/zawa.jpg',
 			kaiji: 'img/kaiji.png'
