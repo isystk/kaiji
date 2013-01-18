@@ -35,7 +35,7 @@ function loadjscssfile(filename, filetype){
 	waitjs();
 })();
 
-
+// DOM Ready
 function initialise() {
 	new Kaiji().run();
 }
@@ -86,26 +86,25 @@ Kaiji.prototype.zawazawa = function (callback) {
 		scrollTop = $(window).scrollTop(), // スクロール上位置
 		scrollLeft = $(window).scrollLeft(); // スクロール左位置
 
-	$('<img src="'+ this.getImage('zawa')+'" width="'+256+'" />')
-	.css('display', 'none')
-	.bind('load', function() {
-		var $img = $(this);
-		$img.css('position', 'absolute')
-		.css('top', Isystk.randInt(scrollTop, scrollTop+height-$img.height()))
-		.css('left', Isystk.randInt(scrollLeft, scrollLeft+width-$img.width()))
-		.css(Isystk.Vendor.getProperty('border-radius'), '20px')
-		.css('z-index', 9999)
-		.fadeIn(2000, function () {
-			$(this).fadeOut(2000, function() {
-				$(this).remove();
-				// コールバックが指定されている場合は実行
-				if (callback) {
-					callback();
-				}
-			});
-		});
-	})
-	.appendTo('body');
+	$('<img src="'+ this.getImage('zawa')+'" width="'+256+'">')
+		.css('display', 'none')
+		.bind('load', function() {
+			var $img = $(this);
+			$img.css('position', 'absolute')
+				.css('top', Isystk.randInt(scrollTop, scrollTop+height-$img.height()))
+				.css('left', Isystk.randInt(scrollLeft, scrollLeft+width-$img.width()))
+				.css('z-index', 9999)
+				.css(Isystk.Vendor.getProperty('border-radius'), 20)
+				.fadeIn(2000, function () {
+					$img.fadeOut(2000, function() {
+						$img.remove();
+						if (callback) {
+							callback();
+						}
+					});
+				});
+		})
+		.appendTo('body');
 };
 
 // Web画面上のコンテンツを浮遊させます。
@@ -118,49 +117,44 @@ Kaiji.prototype.breakcontents = function() {
 		target = $('h1, h2, h3, h4, h5, p, li, dt, dd, pre, aside');
 
 	target.each(function(i) {
-		var $this = $(this);
-			offset = $this.offset();
-
-		// 要素をランダムに配置するCSSを生成
-		var getRandomPosition = function() {
-			return 'translateX(' + Isystk.randInt(-width+offset.left, width-offset.left) + 'px) '+
-				'translateY(' + Isystk.randInt(-height+offset.top, height-offset.left) + 'px) '+
-				'translateZ(' + Isystk.randInt(999, -999) + 'px) '+
-				'rotateX(' + Isystk.randInt(360, -360) +  'deg) ' +
-				'rotateY(' + Isystk.randInt(360, -360) +  'deg) ' +
-				'rotateZ(' + Isystk.randInt(360, -360) +  'deg) ';
-		};
-
-		var firstPosition = getRandomPosition();
+		var $this = $(this),
+			offset = $this.offset(),
+			// 要素をランダム配置
+			getRandomPosition = function() {
+				return 'translateX(' + Isystk.randInt(width+offset.left, offset.left-width) + 'px) '+
+					'translateY(' + Isystk.randInt(height-offset.top, offset.top-height) + 'px) '+
+					'translateZ(' + Isystk.randInt(999, -999) + 'px) '+
+					'rotateX(' + Isystk.randInt(360, -360) +  'deg) ' +
+					'rotateY(' + Isystk.randInt(360, -360) +  'deg) ' +
+					'rotateZ(' + Isystk.randInt(360, -360) +  'deg) ';
+			},
+			position1 = getRandomPosition(),
+			position2 = getRandomPosition(),
+			position3 = getRandomPosition();
 
 		// トランジションでランダムな位置に１度だけ移動させる
 		$this.css(Isystk.Vendor.getProperty('transition-property'), Isystk.Vendor.getProperty('transform'))
 		.css(Isystk.Vendor.getProperty('transition-duration'), '3.0s')
 		.css(Isystk.Vendor.getProperty('transition-timing-function'), 'cubic-bezier(0.610, -0.220, 0.555, 1.105)')
-		.css(Isystk.Vendor.getProperty('transform'), firstPosition)
+		.css(Isystk.Vendor.getProperty('transform'), position1)
 		// トランジション終了時にアニメーションに処理を移行する
 		.bind(Isystk.Vendor.transitionend, randomAnimation);
 
 		// アニメーションでランダムな位置に連続で移動させる
 		function randomAnimation() {
-
-			// キーフレームを生成
-			(function() {
-				var keyframe = [
-					'0% {'+Isystk.Vendor.getProperty('transform')+': '+firstPosition+' }',
-					'30% {'+Isystk.Vendor.getProperty('transform')+': '+getRandomPosition()+' }',
-					'60% {'+Isystk.Vendor.getProperty('transform')+': '+getRandomPosition()+' }',
-					'100% {'+Isystk.Vendor.getProperty('transform')+': '+firstPosition+' }'
-				];
-				var cssAnimation = document.createElement('style');
-				cssAnimation.type = 'text/css';
-				var rules = document.createTextNode(Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
-					keyframe.join(" ") +
-					'}');
-				cssAnimation.appendChild(rules);
-				document.getElementsByTagName("head")[0].appendChild(cssAnimation);
-			})();
-
+			var keyframe = [
+				'0% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }',
+				'30% {'+Isystk.Vendor.getProperty('transform')+': '+position2+' }',
+				'60% {'+Isystk.Vendor.getProperty('transform')+': '+position3+' }',
+				'100% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }'
+			];
+			var cssAnimation = document.createElement('style');
+			cssAnimation.type = 'text/css';
+			var rules = document.createTextNode(Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
+				keyframe.join(" ") +
+				'}');
+			cssAnimation.appendChild(rules);
+			document.getElementsByTagName("head")[0].appendChild(cssAnimation);
 			$this.css(Isystk.Vendor.getProperty('animation-name'), 'move'+i)
 			.css(Isystk.Vendor.getProperty('animation-timing-function'), 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
 			.css(Isystk.Vendor.getProperty('animation-duration'), '60.0s')
@@ -180,43 +174,66 @@ Kaiji.prototype.breakcontents = function() {
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
 			$(this).unbind(Isystk.Vendor.transitionend)
 			.css(Isystk.Vendor.getProperty('animation-name'), '')
-			.css(Isystk.Vendor.getProperty('transform'), css);
-		});
-		$('.kaiji').fadeOut(2000, function() {
-			$(this).remove();
+			.css(Isystk.Vendor.getProperty('transform'), css)
+			// トランジション終了時にカイジを退場させる
+			.bind(Isystk.Vendor.transitionend, function() {
+				$('.kaiji').fadeOut(3000);
+			});
 		});
 	});
 };
 
-// カイジを表示します
-Kaiji.prototype.showKaiji = function() {
-	var kaiji = this,
-		width = $(window).width(), // 表示領域幅
+// カイジを登場させます。
+Kaiji.prototype.showKaiji = function () {
+	var width = $(window).width(), // 表示領域幅
 		height = $(window).height(), // 表示領域高さ
 		scrollTop = $(window).scrollTop(), // スクロール上位置
 		scrollLeft = $(window).scrollLeft(); // スクロール左位置
 
-	$('<img class="kaiji" src="'+ this.getImage('kaiji')+'" width="'+256+'" />')
-	.css('display', 'none')
-	.bind('load', function() {
-		var $img = $(this);
-		$img.css('position', 'absolute')
-		.css('top', scrollTop+height-$img.height())
-		.css('left', scrollLeft+width-$img.width())
-		.css('z-index', 9999)
-		.fadeIn(3000, function () {
-			$('<div class="kaiji">Hacked by ISE<br/>クリックすると元に戻るよ!!</div>').css('position', 'absolute')
-			.css('top', scrollTop+height-$img.height()-50)
-			.css('left', scrollLeft+width-$img.width()-200)
-			.css('z-index', 9999)
-			.css('font-size', '20px')
-			.css('color', '#000000')
-			.css('background', '#ffffff')
-			.css('border', '4px solid #000000')
-			.css(Isystk.Vendor.getProperty('border-radius'), '10px')
-			.appendTo('body');
-		});
-	})
-	.appendTo('body');
+	$('<img class="kaiji" src="'+ this.getImage('kaiji')+'" width="'+256+'">')
+		.css('display', 'none')
+		.bind('load', function() {
+			var $img = $(this);
+			$img.css('position', 'absolute')
+				.css('top', scrollTop+height-350)
+				.css('left', scrollLeft+width-250)
+				.css('z-index', 9999)
+				.fadeIn(2000, function () {
+					// 吹き出しを表示する
+					(function() {
+						var message = $(['<div id="textarea">',
+								'<div class="textinner">',
+									'<p>Hacked!! by ISE</p>',
+								'</div>',
+								'<div class="triangle"></div>',
+							'</div>'].join(''))
+							.css('position', 'absolute')
+							.css('top', scrollTop+height-450)
+							.css('left', scrollLeft+width-400)
+							.css('z-index', 9999);
+						message.find('.textinner')
+							.css('padding', '20px')
+							.css('background-color', '#ffffff')
+							.css('border', '5px solid #000000')
+							.css(Isystk.Vendor.getProperty('border-radius'), '30px');
+						message.find('.textinner p')
+							.css('color', '#000000')
+							.css('text-align', 'center')
+							.css('font-size', '30px');
+						message.find('.triangle')
+							.css('position', 'absolute')
+							.css('left', '70%')
+							.css('border-top', '20px solid #000000')
+							.css('border-right', '20px solid transparent')
+							.css('border-left', '20px solid transparent')
+							.css('border-bottom', '20px solid transparent');
+						$('body').append(message);
+					})();
 
-};
+				});
+			})
+			.appendTo('body');
+
+	};
+
+
