@@ -150,7 +150,7 @@ var Isystk = Isystk || {};
 
 	// CSSルールをスタイルシートに追加します
 	Isystk.addCssRule = function(rule) {
-		if( document.styleSheets && document.styleSheets.length ) {
+		if( document.styleSheets && document.styleSheets.length && document.styleSheets[0].cssRules && document.styleSheets[0].cssRules.length) {
 			var targetRuleIndex = document.styleSheets[0].cssRules.length;
 			document.styleSheets[0].insertRule( rule, targetRuleIndex );
 		} else {
