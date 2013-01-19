@@ -131,21 +131,35 @@ var Isystk = Isystk || {};
 	};
 
 	// JS・CSSファイルを動的にロードします。
-	Isystk.loadjscssfile = function (filename, filetype) {
-		if (filetype === 'js'){
-			var fileref = document.createElement('script');
-			fileref.setAttribute('type','text/javascript');
-			fileref.setAttribute('src', filename);
-		} else if (filetype === 'css') {
-			var fileref=document.createElement('link');
-			fileref.setAttribute('rel', 'stylesheet');
-			fileref.setAttribute('type', 'text/css');
-			fileref.setAttribute('href', filename);
+	Isystk.loadJsCssFile = function loadJsCssFile(file, type){
+		var tag = undefined;
+		if (type === 'js'){
+			tag = document.createElement('script');
+			tag.setAttribute('type','text/javascript');
+			tag.setAttribute('src', file);
+		} else if (type === 'css') {
+			tag = document.createElement('link');
+			tag.setAttribute('rel', 'stylesheet');
+			tag.setAttribute('type', 'text/css');
+			tag.setAttribute('href', file);
 		}
-		if (typeof fileref !== 'undefined') {
-			document.getElementsByTagName('head')[0].appendChild(fileref);
+		if (typeof tag !== 'undefined') {
+			document.getElementsByTagName('head')[0].appendChild(tag);
 		}
 	};
+
+	// CSSルールをスタイルシートに追加します
+	Isystk.addCssRule = function(rule) {
+		if( document.styleSheets && document.styleSheets.length ) {
+			var targetRuleIndex = document.styleSheets[0].cssRules.length;
+			document.styleSheets[0].insertRule( rule, targetRuleIndex );
+		} else {
+			var s = document.createElement( 'style' );
+			s.innerHTML = rule;
+			document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
+		}
+	};
+
 
 })(window);
 

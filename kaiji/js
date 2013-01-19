@@ -1,21 +1,22 @@
 
-window.jQuery || loadjscssfile('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'js');
-window.Isystk || loadjscssfile('http://isystk.github.com/js/isystk.js', 'js');
+window.jQuery || loadJsCssFile('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'js');
+window.Isystk || loadJsCssFile('http://aws.ise-web.com/isystk.github.com/js/isystk.js', 'js');
 
 // JS・CSSファイルを動的にロードします。
-function loadjscssfile(filename, filetype){
-	if (filetype === 'js'){
-		var fileref = document.createElement('script');
-		fileref.setAttribute('type','text/javascript');
-		fileref.setAttribute('src', filename);
-	} else if (filetype === 'css') {
-		var fileref=document.createElement('link');
-		fileref.setAttribute('rel', 'stylesheet');
-		fileref.setAttribute('type', 'text/css');
-		fileref.setAttribute('href', filename);
+function loadJsCssFile(file, type){
+	var tag = undefined;
+	if (type === 'js'){
+		tag = document.createElement('script');
+		tag.setAttribute('type','text/javascript');
+		tag.setAttribute('src', file);
+	} else if (type === 'css') {
+		tag = document.createElement('link');
+		tag.setAttribute('rel', 'stylesheet');
+		tag.setAttribute('type', 'text/css');
+		tag.setAttribute('href', file);
 	}
-	if (typeof fileref !== 'undefined') {
-		document.getElementsByTagName('head')[0].appendChild(fileref);
+	if (typeof tag !== 'undefined') {
+		document.getElementsByTagName('head')[0].appendChild(tag);
 	}
 }
 
@@ -40,6 +41,7 @@ function initialise() {
 	new Kaiji().run();
 }
 
+/* ここからカイジ */
 function Kaiji() {
 	this.setting = {
 		url : 'http://isystk.github.com/kaiji/',
@@ -53,7 +55,6 @@ function Kaiji() {
 	};
 }
 
-
 // 処理を実行します
 Kaiji.prototype.run = function () {
 	var kaiji = this,
@@ -61,18 +62,23 @@ Kaiji.prototype.run = function () {
 		initinterval = interval,
 		timer = undefined,
 		excute =  function() {
-			if( 0 < interval ) {
+			if( 400 < interval ) {
 				// 徐々にざわざわを増やしていく
-				for (var i=0;i<(initinterval / interval); i++) {
+				for (var i=0, len=(initinterval / interval); i<len; i++) {
 					kaiji.zawazawa();
 				}
-				timer = setTimeout( excute, interval );
-				interval = interval - 500;
+				timer = setTimeout(excute, interval);
+				interval = interval - (interval/10);
 			} else {
 				clearTimeout(timer);
 				// ざわざわが終わったら、Webコンテンツを浮遊させる
 				kaiji.zawazawa(function() {
+
+					// Webコンテンツを浮遊させる
 					kaiji.breakcontents();
+
+					// カイジ登場
+					kaiji.showKaiji();
 				});
 			}
 		};
@@ -86,7 +92,7 @@ Kaiji.prototype.zawazawa = function (callback) {
 		scrollTop = $(window).scrollTop(), // スクロール上位置
 		scrollLeft = $(window).scrollLeft(); // スクロール左位置
 
-	$('<img src="'+ this.getImage('zawa')+'" width="'+256+'">')
+	$('<img src="'+ this.getImage('zawa')+'" />')
 		.css('display', 'none')
 		.bind('load', function() {
 			var $img = $(this);
@@ -94,6 +100,7 @@ Kaiji.prototype.zawazawa = function (callback) {
 				.css('top', Isystk.randInt(scrollTop, scrollTop+height-$img.height()))
 				.css('left', Isystk.randInt(scrollLeft, scrollLeft+width-$img.width()))
 				.css('z-index', 9999)
+				.css('width', Isystk.randInt(100, 256))
 				.css(Isystk.Vendor.getProperty('border-radius'), 20)
 				.fadeIn(2000, function () {
 					$img.fadeOut(2000, function() {
@@ -154,17 +161,12 @@ Kaiji.prototype.breakcontents = function() {
 				'}';
 
 			// stylesheet オブジェクトの追加位置に keyframes を追加する
-			var styleSheet = document.styleSheets[0];
-			var targetRuleIndex = styleSheet.cssRules.length;
-			styleSheet.insertRule(keyframes, targetRuleIndex);
+			Isystk.addCssRule(keyframes);
 
 			$this.css(Isystk.Vendor.getProperty('animation-name'), 'move'+i)
 			.css(Isystk.Vendor.getProperty('animation-timing-function'), 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
 			.css(Isystk.Vendor.getProperty('animation-duration'), '60.0s')
 			.css(Isystk.Vendor.getProperty('animation-iteration-count'), 'infinite');
-
-			// カイジ登場
-			kaiji.showKaiji();
 		}
 
 	});
@@ -180,7 +182,9 @@ Kaiji.prototype.breakcontents = function() {
 			.css(Isystk.Vendor.getProperty('transform'), css)
 			// トランジション終了時にカイジを退場させる
 			.bind(Isystk.Vendor.transitionend, function() {
-				$('.kaiji').fadeOut(3000);
+				$('#kaijiMessage marquee').text('See You!!');
+				// 少し送らせてフェードアウト
+				$('.kaiji').delay(3000).fadeOut(3000);
 			});
 		});
 	});
@@ -204,15 +208,16 @@ Kaiji.prototype.showKaiji = function () {
 				.fadeIn(2000, function () {
 					// 吹き出しを表示する
 					(function() {
-						var message = $(['<div id="textarea" class="kaiji">',
+						var message = $(['<div id="kaijiMessage" class="kaiji">',
 								'<div class="textinner">',
-									'<p>Web Hacked!! by Kaiji</p>',
+									'<p><marquee>Web Hacked!! by Kaiji&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;クリックすると元に戻るよ</marquee></p>',
 								'</div>',
 								'<div class="triangle"></div>',
 							'</div>'].join(''))
+							.css('width', '250px')
 							.css('position', 'absolute')
-							.css('top', scrollTop+height-400)
-							.css('left', scrollLeft+width-450)
+							.css('top', scrollTop+height-390)
+							.css('left', scrollLeft+width-390)
 							.css('z-index', 9999);
 						message.find('.textinner')
 							.css('padding', '20px')
@@ -236,7 +241,6 @@ Kaiji.prototype.showKaiji = function () {
 				});
 			})
 			.appendTo('body');
-
 	};
 
 
