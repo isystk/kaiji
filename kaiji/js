@@ -121,7 +121,7 @@ Kaiji.prototype.breakcontents = function() {
 			offset = $this.offset(),
 			// 要素をランダム配置
 			getRandomPosition = function() {
-				return 'translateX(' + Isystk.randInt(width+offset.left, offset.left-width) + 'px) '+
+				return 'translateX(' + Isystk.randInt(width-offset.left, offset.left-width) + 'px) '+
 					'translateY(' + Isystk.randInt(height-offset.top, offset.top-height) + 'px) '+
 					'translateZ(' + Isystk.randInt(999, -999) + 'px) '+
 					'rotateX(' + Isystk.randInt(360, -360) +  'deg) ' +
@@ -148,13 +148,16 @@ Kaiji.prototype.breakcontents = function() {
 				'60% {'+Isystk.Vendor.getProperty('transform')+': '+position3+' }',
 				'100% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }'
 			];
-			var cssAnimation = document.createElement('style');
-			cssAnimation.type = 'text/css';
-			var rules = document.createTextNode(Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
+
+			var keyframes = Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
 				keyframe.join(" ") +
-				'}');
-			cssAnimation.appendChild(rules);
-			document.getElementsByTagName("head")[0].appendChild(cssAnimation);
+				'}';
+
+			// stylesheet オブジェクトの追加位置に keyframes を追加する
+			var styleSheet = document.styleSheets[0];
+			var targetRuleIndex = styleSheet.cssRules.length;
+			styleSheet.insertRule(keyframes, targetRuleIndex);
+
 			$this.css(Isystk.Vendor.getProperty('animation-name'), 'move'+i)
 			.css(Isystk.Vendor.getProperty('animation-timing-function'), 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
 			.css(Isystk.Vendor.getProperty('animation-duration'), '60.0s')
@@ -195,21 +198,21 @@ Kaiji.prototype.showKaiji = function () {
 		.bind('load', function() {
 			var $img = $(this);
 			$img.css('position', 'absolute')
-				.css('top', scrollTop+height-350)
+				.css('top', scrollTop+height-300)
 				.css('left', scrollLeft+width-250)
 				.css('z-index', 9999)
 				.fadeIn(2000, function () {
 					// 吹き出しを表示する
 					(function() {
-						var message = $(['<div id="textarea">',
+						var message = $(['<div id="textarea" class="kaiji">',
 								'<div class="textinner">',
-									'<p>Hacked!! by ISE</p>',
+									'<p>Web Hacked!! by Kaiji</p>',
 								'</div>',
 								'<div class="triangle"></div>',
 							'</div>'].join(''))
 							.css('position', 'absolute')
-							.css('top', scrollTop+height-450)
-							.css('left', scrollLeft+width-400)
+							.css('top', scrollTop+height-400)
+							.css('left', scrollLeft+width-450)
 							.css('z-index', 9999);
 						message.find('.textinner')
 							.css('padding', '20px')
