@@ -57,7 +57,6 @@ var Isystk = Isystk || {};
 	// Vendor
 
 	Isystk.Vendor = (function() {
-		var isystk = this;
 		var vendor = {
 			prefix : '',
 			withoutPrefix : [],
@@ -89,7 +88,7 @@ var Isystk = Isystk || {};
 
 			// ベンダープレフィックス付きのプロパティを取得します。
 			getProperty: function(property) {
-				if (isystk.contains(vendor.withoutPrefix, property)) {
+				if (Isystk.contains(vendor.withoutPrefix, property)) {
 					return property;
 				}
 				return this.prefix ? '-' + this.prefix.charAt(0).toLowerCase() + '-' + property : property;
