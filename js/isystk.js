@@ -80,7 +80,7 @@ var Isystk = Isystk || {};
 
 			// ベンダープレフィックス付きのプロパティを取得します。
 			getProperty: function(property) {
-				if (withoutPrefix.contains(property)) {
+				if (vendor.withoutPrefix.contains(property)) {
 					return property;
 				}
 				return this.prefix ? '-' + this.prefix.charAt(0).toLowerCase() + '-' + property : property;
