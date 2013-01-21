@@ -45,10 +45,19 @@ var Isystk = Isystk || {};
 		return typeof value === 'undefined';
 	};
 
+	Isystk.contains = function(array, value){
+		for (var i in array) {
+			if (array.hasOwnProperty(i) && array[i] === value) {
+				return true;
+			}
+		}
+		return false;
+	};
 
 	// Vendor
 
 	Isystk.Vendor = (function() {
+		var isystk = this;
 		var vendor = {
 			prefix : '',
 			withoutPrefix : [],
@@ -80,7 +89,7 @@ var Isystk = Isystk || {};
 
 			// ベンダープレフィックス付きのプロパティを取得します。
 			getProperty: function(property) {
-				if (vendor.withoutPrefix.contains(property)) {
+				if (isystk.contains(vendor.withoutPrefix, property)) {
 					return property;
 				}
 				return this.prefix ? '-' + this.prefix.charAt(0).toLowerCase() + '-' + property : property;
