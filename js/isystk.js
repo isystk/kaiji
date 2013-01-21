@@ -47,7 +47,7 @@ var Isystk = Isystk || {};
 
 	Isystk.contains = function(array, value){
 		for (var i in array) {
-			if (array.hasOwnProperty(i) && value.match(new RegExp(i))) {
+			if (array.hasOwnProperty(i) && value.match(new RegExp(list[i]))) {
 				return true;
 			}
 		}
