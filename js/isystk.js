@@ -126,6 +126,7 @@ var Isystk = Isystk || {};
 				vendor.animationstart = 'oAnimationStart';
 				vendor.animationend = 'oAnimationEnd';
 				vendor.animationiteration = 'oAnimationIteration';
+				vendor.withoutPrefix= ['^transform$'];
 				//vendor.withoutPrefix= ['^transform$', '^transition(.*)$', '^animation(.*)$'];
 				break;
 			default:
