@@ -102,7 +102,7 @@ var Isystk = Isystk || {};
 				break;
 			case (/firefox/i).test(navigator.userAgent):
 				vendor.prefix = 'Moz';
-				withoutPrefix= ['transform'];
+				vendor.withoutPrefix= ['transform'];
 				break;
 			case (/msie/i).test(navigator.userAgent):
 				vendor.prefix = 'ms';
@@ -117,7 +117,7 @@ var Isystk = Isystk || {};
 				vendor.animationstart = 'oAnimationStart';
 				vendor.animationend = 'oAnimationEnd';
 				vendor.animationiteration = 'oAnimationIteration';
-				withoutPrefix= ['transform'];
+				vendor.withoutPrefix= ['transform'];
 				break;
 			default:
 				break;
