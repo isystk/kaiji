@@ -91,7 +91,7 @@ var Isystk = Isystk || {};
 				if (Isystk.contains(vendor.withoutPrefix, property)) {
 					return property;
 				}
-				return this.prefix ? '-' + this.prefix.charAt(0).toLowerCase() + '-' + property : property;
+				return this.prefix ? '-' + this.prefix.toLowerCase() + '-' + property : property;
 			},
 
 			// ベンダープレフィックス付きのキーフレームプロパティを取得します。
