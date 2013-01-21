@@ -56,9 +56,6 @@ var Isystk = Isystk || {};
 			animationend : 'animationend',
 			animationiteration : 'animationiteration',
 
-			// Caution!
-			// 親が window でないとダメらしい
-			// 使用しているスクリプトがあるので削除しないが, 使わないこと
 			requestAnimationFrame: (function(){
 				return  window.requestAnimationFrame	   ||
 						window.webkitRequestAnimationFrame ||
@@ -82,8 +79,7 @@ var Isystk = Isystk || {};
 
 			// ベンダープレフィックス付きのプロパティを取得します。
 			getProperty: function(property) {
-				//return this.prefix ? this.prefix + property.charAt(0).toUpperCase() + property.slice(1) : property;
-				return this.prefix ? '-' + this.prefix + '-' + property : property;
+				return this.prefix ? '-' + this.prefix.charAt(0).toLowerCase() + '-' + property : property;
 			},
 
 			// ベンダープレフィックス付きのキーフレームプロパティを取得します。
@@ -101,7 +97,7 @@ var Isystk = Isystk || {};
 				vendor.animationiteration = 'webkitAnimationIteration';
 				break;
 			case (/firefox/i).test(navigator.userAgent):
-				vendor.prefix = 'moz';
+				vendor.prefix = 'Moz';
 				break;
 			case (/msie/i).test(navigator.userAgent):
 				vendor.prefix = 'ms';
