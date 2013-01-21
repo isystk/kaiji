@@ -51,6 +51,7 @@ var Isystk = Isystk || {};
 	Isystk.Vendor = (function() {
 		var vendor = {
 			prefix : '',
+			withoutPrefix : [],
 			transitionend : 'transitionend',
 			animationstart : 'animationstart',
 			animationend : 'animationend',
@@ -79,6 +80,9 @@ var Isystk = Isystk || {};
 
 			// ベンダープレフィックス付きのプロパティを取得します。
 			getProperty: function(property) {
+				if (withoutPrefix.contains(property)) {
+					return property;
+				}
 				return this.prefix ? '-' + this.prefix.charAt(0).toLowerCase() + '-' + property : property;
 			},
 
@@ -98,6 +102,7 @@ var Isystk = Isystk || {};
 				break;
 			case (/firefox/i).test(navigator.userAgent):
 				vendor.prefix = 'Moz';
+				withoutPrefix= ['transform'];
 				break;
 			case (/msie/i).test(navigator.userAgent):
 				vendor.prefix = 'ms';
@@ -112,6 +117,7 @@ var Isystk = Isystk || {};
 				vendor.animationstart = 'oAnimationStart';
 				vendor.animationend = 'oAnimationEnd';
 				vendor.animationiteration = 'oAnimationIteration';
+				withoutPrefix= ['transform'];
 				break;
 			default:
 				break;
