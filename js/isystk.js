@@ -110,7 +110,7 @@ var Isystk = Isystk || {};
 				break;
 			case (/firefox/i).test(navigator.userAgent):
 				vendor.prefix = 'Moz';
-				vendor.withoutPrefix= ['^transform$', '^transition(.*)$'];
+				vendor.withoutPrefix= ['^transform$', '^transition(.*)$', '^animation(.*)$'];
 				break;
 			case (/msie/i).test(navigator.userAgent):
 				vendor.prefix = 'ms';
@@ -118,7 +118,7 @@ var Isystk = Isystk || {};
 				vendor.animationstart = 'MSAnimationStart';
 				vendor.animationend = 'MSAnimationEnd';
 				vendor.animationiteration = 'MSAnimationIteration';
-				vendor.withoutPrefix= ['^transition(.*)$'];
+				vendor.withoutPrefix= ['^transition(.*)$', '^animation(.*)$'];
 				break;
 			case 'opera' in window:
 				vendor.prefix = 'O';
@@ -126,7 +126,7 @@ var Isystk = Isystk || {};
 				vendor.animationstart = 'oAnimationStart';
 				vendor.animationend = 'oAnimationEnd';
 				vendor.animationiteration = 'oAnimationIteration';
-				vendor.withoutPrefix= ['^transform$', '^transition(.*)$'];
+				vendor.withoutPrefix= ['^transform$', '^transition(.*)$', '^animation(.*)$'];
 				break;
 			default:
 				break;
