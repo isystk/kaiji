@@ -140,20 +140,25 @@ Kaiji.prototype.breakcontents = function() {
 			position3 = getRandomPosition();
 
 		// トランジションでランダムな位置に１度だけ移動させる
-		$this.css(Isystk.Vendor.getProperty('transition-property'), Isystk.Vendor.getProperty('transform'))
+		$this
+		.css(Isystk.Vendor.getProperty('transition-property'), Isystk.Vendor.getProperty('transform'))
+		.css(transition-property, 'transform')
 		.css(Isystk.Vendor.getProperty('transition-duration'), '3.0s')
+		.css('transition-duration', '3.0s')
 		.css(Isystk.Vendor.getProperty('transition-timing-function'), 'cubic-bezier(0.610, -0.220, 0.555, 1.105)')
+		.css('transition-timing-function', 'cubic-bezier(0.610, -0.220, 0.555, 1.105)')
 		.css(Isystk.Vendor.getProperty('transform'), position1)
+		.css('transform', position1)
 		// トランジション終了時にアニメーションに処理を移行する
 		.bind(Isystk.Vendor.transitionend, randomAnimation);
 
 		// アニメーションでランダムな位置に連続で移動させる
 		function randomAnimation() {
 			var keyframe = [
-				'0% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }',
-				'30% {'+Isystk.Vendor.getProperty('transform')+': '+position2+' }',
-				'60% {'+Isystk.Vendor.getProperty('transform')+': '+position3+' }',
-				'100% {'+Isystk.Vendor.getProperty('transform')+': '+position1+' }'
+				'0% {'+Isystk.Vendor.getProperty('transform')+': '+position1+', '+'transform'+': '+position1+' }',
+				'30% {'+Isystk.Vendor.getProperty('transform')+': '+position2+', '+'transform'+': '+position2+' }',
+				'60% {'+Isystk.Vendor.getProperty('transform')+': '+position3+', '+'transform'+': '+position3+' }',
+				'100% {'+Isystk.Vendor.getProperty('transform')+': '+position1+', '+'transform'+': '+position1+' }'
 			];
 
 			var keyframes = Isystk.Vendor.getKeyframeProperty('move'+i) + '{' +
@@ -163,10 +168,15 @@ Kaiji.prototype.breakcontents = function() {
 			// stylesheet オブジェクトの追加位置に keyframes を追加する
 			Isystk.addCssRule(keyframes);
 
-			$this.css(Isystk.Vendor.getProperty('animation-name'), 'move'+i)
+			$this
+			.css(Isystk.Vendor.getProperty('animation-name'), 'move'+i)
+			.css('animation-name', 'move'+i)
 			.css(Isystk.Vendor.getProperty('animation-timing-function'), 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
+			.css('animation-timing-function', 'cubic-bezier(0.0, 0.0, 1.0, 1.0)')
 			.css(Isystk.Vendor.getProperty('animation-duration'), '60.0s')
-			.css(Isystk.Vendor.getProperty('animation-iteration-count'), 'infinite');
+			.css('animation-duration', '60.0s')
+			.css(Isystk.Vendor.getProperty('animation-iteration-count'), 'infinite')
+			.css('animation-iteration-count', 'infinite');
 		}
 
 	});
@@ -179,7 +189,9 @@ Kaiji.prototype.breakcontents = function() {
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
 			$(this).unbind(Isystk.Vendor.transitionend)
 			.css(Isystk.Vendor.getProperty('animation-name'), '')
+			.css('animation-name', '')
 			.css(Isystk.Vendor.getProperty('transform'), css)
+			.css('transform', css)
 			// トランジション終了時にカイジを退場させる
 			.bind(Isystk.Vendor.transitionend, function() {
 				$('#kaijiMessage marquee').text('See You!!');
