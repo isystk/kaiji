@@ -85,7 +85,7 @@ var Isystk = Isystk || {};
 			// ベンダープレフィックス付きのキーフレームプロパティを取得します。
 			getKeyframeProperty: function(name) {
 				return '@' + vendor.getProperty('keyframes') + ' ' + name;
-			};
+			}
 		};
 
 		switch (true) {
