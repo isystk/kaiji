@@ -101,6 +101,7 @@ Kaiji.prototype.zawazawa = function (callback) {
 				.css('left', Isystk.randInt(scrollLeft, scrollLeft+width-$img.width()))
 				.css('z-index', 9999)
 				.css('width', Isystk.randInt(100, 256))
+				.css('border-radius', 20)
 				.css(Isystk.Vendor.getProperty('border-radius'), 20)
 				.fadeIn(2000, function () {
 					$img.fadeOut(2000, function() {
@@ -223,6 +224,7 @@ Kaiji.prototype.showKaiji = function () {
 							.css('padding', '20px')
 							.css('background-color', '#ffffff')
 							.css('border', '5px solid #000000')
+							.css('border-radius', '30px')
 							.css(Isystk.Vendor.getProperty('border-radius'), '30px');
 						message.find('.textinner p')
 							.css('color', '#000000')
