@@ -47,7 +47,7 @@ var Isystk = Isystk || {};
 
 	Isystk.contains = function(array, value){
 		for (var i in array) {
-			if (array.hasOwnProperty(i) && array[i] === value) {
+			if (array.hasOwnProperty(i) && array[i].match(new RegExp('^'+value+'$'))) {
 				return true;
 			}
 		}
@@ -110,7 +110,7 @@ var Isystk = Isystk || {};
 				break;
 			case (/firefox/i).test(navigator.userAgent):
 				vendor.prefix = 'Moz';
-				vendor.withoutPrefix= ['transform'];
+				vendor.withoutPrefix= ['transform', 'transition(.*)'];
 				break;
 			case (/msie/i).test(navigator.userAgent):
 				vendor.prefix = 'ms';
@@ -118,6 +118,7 @@ var Isystk = Isystk || {};
 				vendor.animationstart = 'MSAnimationStart';
 				vendor.animationend = 'MSAnimationEnd';
 				vendor.animationiteration = 'MSAnimationIteration';
+				vendor.withoutPrefix= ['transition(.*)'];
 				break;
 			case 'opera' in window:
 				vendor.prefix = 'O';
@@ -125,7 +126,7 @@ var Isystk = Isystk || {};
 				vendor.animationstart = 'oAnimationStart';
 				vendor.animationend = 'oAnimationEnd';
 				vendor.animationiteration = 'oAnimationIteration';
-				vendor.withoutPrefix= ['transform'];
+				vendor.withoutPrefix= ['transform', 'transition(.*)'];
 				break;
 			default:
 				break;
