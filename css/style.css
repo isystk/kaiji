@@ -267,6 +267,26 @@ nav a:hover{
 	padding: 25px;
 }
 
+/* ソーシャルボタン */
+#socialArea {
+	padding-left: 100px;
+}
+#socialArea ul {
+	list-style-type: none;
+	overflow: hidden;
+}
+#socialArea li {
+	list-style-type: none;
+	float: left;
+	margin-right: 4px;
+}
+#socialArea iframe {
+	margin: 0 !important;
+}
+.mixi {
+	padding-left: 20px;
+}
+
 /* ここまでオリジナルスタイルシート */
 
 /* Pretty printing styles. Used with prettify.js. */

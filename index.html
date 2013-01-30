@@ -7,7 +7,7 @@
 	<meta name="author" content="Ise Yoshitaka">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="./css/all.css">
+	<link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 	<div id="header-container">
@@ -39,7 +39,35 @@
 (function(){var s=document.createElement(&#039;scr&#039;+&#039;ipt&#039;);s.charset=&#039;UTF-8&#039;;s.language=&#039;javascr&#039;+&#039;ipt&#039;;s.type=&#039;text/javascr&#039;+&#039;ipt&#039;;var d=new Date;s.src=&#039;http://isystk.github.com/kaiji/js?u=&#039;+escape(document.location.href)+&#039;&amp;amp;d=&#039;+d.getMilliseconds();document.body.appendChild(s);})();
 &lt;/script&gt;
 </pre>
-				</section>
+	
+			<div id="socialArea">
+				<ul>
+					<li class="facebook">
+						<div id="fb-root"></div>
+						<script>
+							(function(d, s, id) {
+								var js, fjs = d.getElementsByTagName(s)[0];
+								if (d.getElementById(id)) return;
+								js = d.createElement(s); js.id = id;
+								js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=531011620253886";
+								fjs.parentNode.insertBefore(js, fjs);
+								}(document, 'script', 'facebook-jssdk'));
+						</script>
+					</li>
+					<li class="twitter">
+						<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja">ツイート</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					</li>
+					<li class="google">
+						<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+						<g:plusone></g:plusone>
+					</li>
+					<li class="mixi">
+						<div data-plugins-type="mixi-favorite" data-service-key="cc0c53dd8e2ee6ed68654364d74f2202ce04a89d" data-size="medium" data-href="" data-show-faces="false" data-show-count="true" data-show-comment="false" data-width=""></div><script type="text/javascript">(function(d) {var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;s.src = '//static.mixi.jp/js/plugins.js#lang=ja';d.getElementsByTagName('head')[0].appendChild(s);})(document);</script>
+					</li>
+				</ul>
+  			</div>
+			</section>
 
 				<br />
 
@@ -61,7 +89,6 @@
 					</div>
 				</div>
 			</aside>
-
 
 		</div> <!-- #main -->
 	</div> <!-- #main-container -->
