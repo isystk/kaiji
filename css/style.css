@@ -269,7 +269,8 @@ nav a:hover{
 
 /* ソーシャルボタン */
 #socialArea {
-	padding-left: 100px;
+	position: absolute;
+	left: 50px;
 }
 #socialArea ul {
 	list-style-type: none;
