@@ -270,7 +270,7 @@ nav a:hover{
 /* ソーシャルボタン */
 #socialArea {
 	position: absolute;
-	left: 90px;
+	left: 50px;
 }
 #socialArea ul {
 	list-style-type: none;
