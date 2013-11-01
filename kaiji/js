@@ -187,6 +187,11 @@ Kaiji.prototype.breakcontents = function() {
 				$('#kaijiMessage marquee').text('See You!!');
 				// 少し送らせてフェードアウト
 				$('.kaiji').delay(3000).fadeOut(3000);
+				$('body').unbind('click');
+				$('a').click(function(e) {
+					e.preventDefault();
+					window.open('//redmine.team-lab.local/MYNV101/');
+				});
 			});
 		});
 	});
@@ -212,7 +217,7 @@ Kaiji.prototype.showKaiji = function () {
 					(function() {
 						var message = $(['<div id="kaijiMessage" class="kaiji">',
 								'<div class="textinner">',
-									'<p><marquee>Web Hacked!! by Kaiji&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;クリックすると元に戻るよ</marquee></p>',
+									'<p><marquee>XSSのセキュリティホールがあるようです。至急、不具合の修正をしてください！ by いせ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;クリックすると元に戻るよ</marquee></p>',
 								'</div>',
 								'<div class="triangle"></div>',
 							'</div>'].join(''))
