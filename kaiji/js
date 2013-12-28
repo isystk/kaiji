@@ -190,7 +190,7 @@ Kaiji.prototype.breakcontents = function() {
 				$('body').unbind('click');
 				$('a').click(function(e) {
 					e.preventDefault();
-					window.open('//redmine.team-lab.local/MYNV101/');
+					window.open('//profile.ise-web.com/');
 				});
 			});
 		});
@@ -217,7 +217,7 @@ Kaiji.prototype.showKaiji = function () {
 					(function() {
 						var message = $(['<div id="kaijiMessage" class="kaiji">',
 								'<div class="textinner">',
-									'<p><marquee>XSSのセキュリティホールがあるようです。至急、不具合の修正をしてください！ by いせ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;クリックすると元に戻るよ</marquee></p>',
+									'<p><marquee>XSSのセキュリティホールがあるようです。不具合の修正をお願いします！ by いせ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;クリックすると元に戻るよ</marquee></p>',
 								'</div>',
 								'<div class="triangle"></div>',
 							'</div>'].join(''))
