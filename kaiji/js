@@ -180,7 +180,9 @@ Kaiji.prototype.breakcontents = function() {
 			var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
 			$(this).unbind(Isystk.Vendor.transitionend)
-			//.css(Isystk.Vendor.getProperty('animation-name'), '')
+			.css(Isystk.Vendor.getProperty('transition-duration'), '3.0s')
+			.css(Isystk.Vendor.getProperty('transition-timing-function'), 'cubic-bezier(0.610, -0.220, 0.555, 1.105)')
+			.css(Isystk.Vendor.getProperty('animation-name'), '')
 			.css(Isystk.Vendor.getProperty('transform'), css)
 			// トランジション終了時にカイジを退場させる
 			.bind(Isystk.Vendor.transitionend, function() {
