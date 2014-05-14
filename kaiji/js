@@ -38,7 +38,8 @@ function loadJsCssFile(file, type){
 
 // DOM Ready
 function initialise() {
-	new Kaiji().run();
+	window.Kaiji = new Kaiji();
+	window.Kaiji.run();
 }
 
 /* ここからカイジ */
