@@ -176,23 +176,23 @@ Kaiji.prototype.breakcontents = function() {
 	// クリックで元の位置に配置
 	$('body').one('click', function(e) {
 		e.preventDefault();
-		target.css(Isystk.Vendor.getProperty('animation-name'), '');
+		$(target.selector).css(Isystk.Vendor.getProperty('animation-name'), '');
 		target.each(function() {
 			var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
 				'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
 			$(this).unbind(Isystk.Vendor.transitionend)
 			.css(Isystk.Vendor.getProperty('transform'), css)
-			// トランジション終了時にカイジを退場させる
-			.bind(Isystk.Vendor.transitionend, function() {
-				$('#kaijiMessage marquee').text('See You!!');
-				// 少し送らせてフェードアウト
-				$('.kaiji').delay(3000).fadeOut(3000);
-				$('body').unbind('click');
-				$('a').click(function(e) {
-					e.preventDefault();
-					window.open('//profile.ise-web.com/');
-				});
-			});
+		});
+	});
+	// トランジション終了時にカイジを退場させる
+	.bind(Isystk.Vendor.transitionend, function() {
+		$('#kaijiMessage marquee').text('See You!!');
+		// 少し送らせてフェードアウト
+		$('.kaiji').delay(3000).fadeOut(3000);
+		$('body').unbind('click');
+		$('a').click(function(e) {
+			e.preventDefault();
+			window.open('//profile.ise-web.com/');
 		});
 	});
 };
