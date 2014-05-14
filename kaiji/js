@@ -183,12 +183,10 @@ Kaiji.prototype.breakcontents = function() {
 			$(this).unbind(Isystk.Vendor.transitionend)
 			.css(Isystk.Vendor.getProperty('transform'), css)
 		});
-	})
-	// トランジション終了時にカイジを退場させる
-	.bind(Isystk.Vendor.transitionend, function() {
+		// トランジション終了時にカイジを退場させる
 		$('#kaijiMessage marquee').text('See You!!');
 		// 少し送らせてフェードアウト
-		$('.kaiji').delay(3000).fadeOut(3000);
+		$('.kaiji').delay(5000).fadeOut(3000);
 		$('body').unbind('click');
 		$('a').click(function(e) {
 			e.preventDefault();
