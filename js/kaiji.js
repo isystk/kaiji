@@ -191,7 +191,7 @@ Kaiji.prototype.breakcontents = function() {
 			$('body').unbind('click');
 			$('a').click(function(e) {
 				e.preventDefault();
-				window.open('//profile.ise-web.com/');
+				window.open('//isystk.github.io/profile/');
 			});
 		},1000);
 	});
