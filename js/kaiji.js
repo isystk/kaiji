@@ -20,22 +20,6 @@ function loadJsCssFile(file, type){
 	}
 }
 
-// JSファイルがロードされるまで待機する
-(function() {
-	var timer = undefined;
-	var waitjs =  function() {
-		if( typeof( jQuery ) === 'undefined' ||
-			typeof( Isystk ) === 'undefined' ) {
-			timer = setTimeout( waitjs, 0 );
-		} else {
-			clearTimeout(timer);
-			$ = jQuery;
-			$(initialise);
-		}
-	};
-	waitjs();
-})();
-
 // DOM Ready
 function initialise() {
 	new Kaiji().run();
@@ -249,5 +233,21 @@ Kaiji.prototype.showKaiji = function () {
 			})
 			.appendTo('body');
 	};
+
+// JSファイルがロードされるまで待機する
+(function() {
+	var timer = undefined;
+	var waitjs =  function() {
+		if( typeof( jQuery ) === 'undefined' ||
+			typeof( Isystk ) === 'undefined' ) {
+			timer = setTimeout( waitjs, 0 );
+		} else {
+			clearTimeout(timer);
+			$ = jQuery;
+			$(initialise);
+		}
+	};
+	waitjs();
+})();
 
 
