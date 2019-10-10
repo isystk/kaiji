@@ -1,6 +1,6 @@
 
-window.jQuery || loadJsCssFile('https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'js');
-window.Isystk || loadJsCssFile('https://isystk.github.com/kaiji/js/isystk.js?d='+new Date().getMilliseconds(), 'js');
+window.jQuery || loadJsCssFile('//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'js');
+window.Isystk || loadJsCssFile('//isystk.github.com/kaiji/js/isystk.js?d='+new Date().getMilliseconds(), 'js');
 
 // JS・CSSファイルを動的にロードします。
 function loadJsCssFile(file, type){
