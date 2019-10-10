@@ -1,6 +1,6 @@
 
-window.jQuery || loadJsCssFile('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'js');
-window.Isystk || loadJsCssFile('http://isystk.github.com/kaiji/js/isystk.js?d='+new Date().getMilliseconds(), 'js');
+window.jQuery || loadJsCssFile('//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'js');
+window.Isystk || loadJsCssFile('//isystk.github.com/kaiji/js/isystk.js?d='+new Date().getMilliseconds(), 'js');
 
 // JS・CSSファイルを動的にロードします。
 function loadJsCssFile(file, type){
@@ -19,22 +19,6 @@ function loadJsCssFile(file, type){
 		document.getElementsByTagName('head')[0].appendChild(tag);
 	}
 }
-
-// JSファイルがロードされるまで待機する
-(function() {
-	var timer = undefined;
-	var waitjs =  function() {
-		if( typeof( jQuery ) === 'undefined' ||
-			typeof( Isystk ) === 'undefined' ) {
-			timer = setTimeout( waitjs, 0 );
-		} else {
-			clearTimeout(timer);
-			$ = jQuery;
-			$(initialise);
-		}
-	};
-	waitjs();
-})();
 
 // DOM Ready
 function initialise() {
@@ -249,5 +233,21 @@ Kaiji.prototype.showKaiji = function () {
 			})
 			.appendTo('body');
 	};
+
+// JSファイルがロードされるまで待機する
+(function() {
+	var timer = undefined;
+	var waitjs =  function() {
+		if( typeof( jQuery ) === 'undefined' ||
+			typeof( Isystk ) === 'undefined' ) {
+			timer = setTimeout( waitjs, 0 );
+		} else {
+			clearTimeout(timer);
+			$ = jQuery;
+			$(initialise);
+		}
+	};
+	waitjs();
+})();
 
 
