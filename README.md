@@ -7,7 +7,7 @@ Overview
 ## Description
 
 ## Demo
-(http://isystk.github.io/kaiji/)
+(http://demo.isystk.com/kaiji/)
 
 ## VS. 
 
