@@ -260,7 +260,7 @@ Kaiji.prototype.breakcontents = function() {
 		height = $(window).height(), // 表示領域高さ
 		scrollTop = $(window).scrollTop(), // スクロール上位置
 		scrollLeft = $(window).scrollLeft(), // スクロール左位置
-		target = $('h1, h2, h3, h4, h5, p, li, dt, dd, pre, aside');
+		target = $('h1, h2, h3, h4, h5, p, li, dt, dd, pre, aside, header, footer');
 
 	target.each(function(i) {
 		var $this = $(this),
@@ -318,24 +318,20 @@ Kaiji.prototype.breakcontents = function() {
 		$(target.selector).css(Isystk.Vendor.getProperty('animation-name'), '');
 		setTimeout(function () {
 			target.each(function() {
-				$(this)
-					.css(Isystk.Vendor.getProperty('animation-name'), '')
-					.css(Isystk.Vendor.getProperty('animation-timing-function'), '')
-					.css(Isystk.Vendor.getProperty('animation-duration'), '')
-					.css(Isystk.Vendor.getProperty('animation-iteration-count'), '');
 				var css = 'translateX(0px) translateY(0px) translateZ(0px) ' +
 					'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
-				$(this).unbind(Isystk.Vendor.transitionend)
-					.css(Isystk.Vendor.getProperty('transform'), css);
+				$(this)
+					.css(Isystk.Vendor.getProperty('transform'), css)
+					.css(Isystk.Vendor.getProperty('animation-name'), '');
 			});
 			// トランジション終了時にカイジを退場させる
-			$('#kaijiMessage marquee').text('See You!!');
+			$('#kaijiMessage .marquee').empty().html('&nbsp;&nbsp;&nbsp;&nbsp;See You!!&nbsp;&nbsp;&nbsp;&nbsp;See You!!&nbsp;&nbsp;&nbsp;&nbsp;See You!!&nbsp;&nbsp;&nbsp;&nbsp;See You!!');
 			// 少し送らせてフェードアウト
 			$('.kaiji').delay(3000).fadeOut(3000);
 			$('body').unbind('click');
 			$('a').click(function(e) {
 				e.preventDefault();
-				window.open('https://profile.isystk.com/');
+				window.open('https://blog.isystk.com/web_production/xss/214/');
 			});
 		},1000);
 	});
@@ -359,11 +355,21 @@ Kaiji.prototype.showKaiji = function () {
 		.fadeIn(2000, function () {
 			// 吹き出しを表示する
 			(function() {
+
+				var keyframes = Isystk.Vendor.getKeyframeProperty('marquee') + '{' +
+				[
+					'from {'+Isystk.Vendor.getProperty('transform')+': translate(0) }',
+					'to {'+Isystk.Vendor.getProperty('transform')+': translate(-100%) }'
+				].join(" ") +
+				'}';
+				Isystk.addCssRule(keyframes);
+
 				var message = $(['<div id="kaijiMessage" class="kaiji">',
 						'<div class="textinner">',
-							'<p><marquee>XSSのセキュリティホールがあるようです。不具合の修正をお願いします！ by いせ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;クリックすると元に戻るよ</marquee></p>',
+							'<p class="marquee">&nbsp;&nbsp;&nbsp;&nbsp;XSSのセキュリティホールがあるようです。不具合の修正をお願いします！ by いせ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;クリックすると元に戻るよ</p>',
 						'</div>',
-						'<div class="triangle"></div>',
+						'<div class="triangle1"></div>',
+						'<div class="triangle2"></div>',
 					'</div>'].join(''))
 					.css('width', '250px')
 					.css('position', 'absolute')
@@ -374,18 +380,38 @@ Kaiji.prototype.showKaiji = function () {
 					.css('padding', '20px')
 					.css('background-color', '#ffffff')
 					.css('border', '5px solid #000000')
-					.css('border-radius', '30px');
+					.css('border-radius', '30px')
+					.css('overflow', 'hidden');
 				message.find('.textinner p')
 					.css('color', '#000000')
 					.css('text-align', 'center')
 					.css('font-size', '30px');
-				message.find('.triangle')
+				message.find('.triangle1')
 					.css('position', 'absolute')
 					.css('left', '70%')
 					.css('border-top', '20px solid #000000')
 					.css('border-right', '20px solid transparent')
 					.css('border-left', '20px solid transparent')
-					.css('border-bottom', '20px solid transparent');
+					.css('border-bottom', '20px solid transparent')
+					.css('border-color', '#000 transparent transparent');
+				message.find('.triangle2')
+					.css('position', 'absolute')
+					.css('left', '70%')
+					.css('border-top', '20px solid #000000')
+					.css('border-right', '20px solid transparent')
+					.css('border-left', '20px solid transparent')
+					.css('border-bottom', '20px solid transparent')
+					.css('border-color', '#fff transparent transparent')
+					.css('top', '150px');
+				message.find('.marquee')
+					.css('overflow', '-webkit-marquee')
+					.css('white-space', 'nowrap')
+					.css('display', 'inline-block')
+					.css('white-space', 'nowrap')
+					.css('animation-name', 'marquee')
+					.css('animation-duration', '20s')
+					.css('animation-timing-function', 'linear')
+					.css('animation-iteration-count', 'infinite');
 				$('body').append(message);
 			})();
 		});
