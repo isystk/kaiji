@@ -183,7 +183,7 @@ function initialise() {
 /* ここからカイジ */
 function Kaiji() {
 	this.setting = {
-		url : '../',
+		url : './',
 		img : {
 			zawa: 'images/zawa.jpg',
 			kaiji: 'images/kaiji.png'
