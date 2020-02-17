@@ -1,0 +1,11 @@
+
+# design
+RewriteEngine On
+RewriteBase /kaiji/
+RewriteCond %{REQUEST_URI} !/kaiji/dist
+RewriteCond %{REQUEST_URI} !/kaiji/git-hook.php
+RewriteRule ^(.*)$ dist/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /kaiji/ [L,R=301]
+
