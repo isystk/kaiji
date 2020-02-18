@@ -4,7 +4,7 @@
   "description": "XSSカイジ",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack --mode production",
+    "generate": "npx webpack --mode production",
     "dev": "npx webpack-dev-server --mode development"
   },
   "repository": {
