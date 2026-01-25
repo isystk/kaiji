@@ -2,35 +2,27 @@
   "name": "xss-kaiji",
   "version": "1.0.0",
   "description": "XSSカイジ",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "generate": "npx webpack --mode production",
-    "dev": "npx webpack-dev-server --mode development"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://@github.com/isystk/kaiji.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/isystk/kaiji/issues"
-  },
-  "homepage": "https://github.com/isystk/kaiji#readme",
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^3.4.2",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1",
+    "vite": "^5.0.0"
   },
   "dependencies": {
-    "file-loader": "^5.0.2"
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.8"
   }
 }
