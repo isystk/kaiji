@@ -24,7 +24,9 @@ XSS（クロスサイトスクリプティング）をテーマにしたWebア�
 - **Frontend**: TypeScript, Bootstrap, @popperjs/core
 - **Design/Tool**: FontAwesome, ESLint, Prettier
 
-## 🎥 デモ動画
+## 🎥 デモページ
+https://isystk.github.io/kaiji/demo.html
+
 ![demo](./demo.gif)
 
 ## 📦 ディレクトリ構造
