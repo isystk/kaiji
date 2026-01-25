@@ -2,32 +2,29 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
-    root: 'src', // ソースディレクトリを指定
-    publicDir: '../public', // 静的ファイルが必要な場合
+    base: './',
+    root: 'src',
+    publicDir: resolve(__dirname, 'public'),
     build: {
-        outDir: '../dist',
+        outDir: resolve(__dirname, 'dist'),
         emptyOutDir: true,
         rollupOptions: {
             input: {
-                // HTMLをエントリポイントとするのがViteの標準
-                main: resolve(__dirname, 'src/index.html')
+                // メインサイト用 (index.html から参照される)
+                main: resolve(__dirname, 'src/index.html'),
+                // ブックマークレット等で単体利用するスクリプト用
+                kaiji: resolve(__dirname, 'src/ts/kaiji.ts'),
             },
             output: {
-                // JS, CSS, Asset の出力先を整理
-                entryFileNames: 'js/[name].js',
+                // エントリポイントの名前に応じてファイル名を決定
+                entryFileNames: (chunkInfo) => {
+                    return chunkInfo.name === 'kaiji' ? 'kaiji.js' : 'index.js';
+                },
+                // チャンク（共通パーツ）が出る場合は js フォルダへ
                 chunkFileNames: 'js/[name].js',
-                assetFileNames: (assetInfo) => {
-                    if (/\.(css)$/.test(assetInfo.name)) {
-                        return 'css/[name].[ext]';
-                    }
-                    return 'images/[name].[ext]';
-                }
-            }
+                // CSSや画像などのアセット
+                assetFileNames: 'assets/[name].[ext]',
+            },
         },
-        minify: 'terser' // Webpackの挙動に合わせる場合はTerser（デフォルトはesbuild）
     },
-    server: {
-        port: 3000,
-        open: true
-    }
 });
