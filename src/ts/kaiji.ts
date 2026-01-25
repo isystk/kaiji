@@ -37,7 +37,7 @@ export class Kaiji {
 
   constructor() {
     this.setting = {
-      url: './',
+      url: 'https://isystk.github.io/kaiji/',
       img: {
         zawa: 'images/zawa.jpg',
         kaiji: 'images/kaiji.png',
