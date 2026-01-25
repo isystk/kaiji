@@ -11,7 +11,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 // // メインサイト用 (index.html から参照される)
-                // main: resolve(__dirname, 'src/index.html'),
+                main: resolve(__dirname, 'src/index.html'),
                 // ブックマークレット等で単体利用するスクリプト用
                 kaiji: resolve(__dirname, 'src/ts/kaiji.ts'),
             },
