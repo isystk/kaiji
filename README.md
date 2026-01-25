@@ -25,9 +25,7 @@ XSS（クロスサイトスクリプティング）をテーマにしたWebア�
 - **Design/Tool**: FontAwesome, ESLint, Prettier
 
 ## 🎥 デモ動画
-<video src="./demo.gif" width="600" controls muted autoplay loop>
-  お使いのブラウザはビデオタグをサポートしていません。
-</video>
+![demo](./demo.gif)
 
 ## 📦 ディレクトリ構造
 
