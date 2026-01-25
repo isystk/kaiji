@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>XSSカイジ｜デモページ</title>
+  <script type="module" crossorigin src="./index.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/main.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">XSSカイジ</span>
+    </div>
+</nav>
+
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <article class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h2 class="card-title h4 mb-4">ざわざわした後に何かが起こります。</h2>
+
+                    <section class="mb-5">
+                        <h3 class="h5 border-start border-4 border-primary ps-2 mb-3">デモ</h3>
+                        <div class="bg-white border rounded p-3 text-center">
+                            <a class="btn btn-primary px-4" href="javascript:(function(){const%20s=document.createElement('script');s.type='module';s.src='/ts/kaiji.ts?d='+Date.now();document.body.appendChild(s);})();">
+                                ここをクリックしてみてね
+                            </a>
+                            <p class="form-text mt-2 mb-0">↑ このボタンをツールバーにドラッグするとブックマークレットになります。</p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3 class="h5 border-start border-4 border-primary ps-2 mb-3">設置方法</h3>
+                        <p>以下のスクリプトをご利用のブログに設置して下さい。</p>
+                        <div class="position-relative">
+                <pre class="bg-dark text-white p-3 rounded shadow-inner"><code>&lt;script&gt;
+(function(){
+  const s=document.createElement('script');
+  s.type='module';
+  s.src='/ts/kaiji?d='+Date.now();
+  document.body.appendChild(s);
+})();
+&lt;/script&gt;</code></pre>
+                        </div>
+                    </section>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</main>
+
+<footer class="py-4 bg-white border-top text-center">
+    <p class="text-muted mb-0">&copy; 2020 isystk.com</p>
+</footer>
+
+</body>
+</html>
