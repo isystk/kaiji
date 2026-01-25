@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>XSSカイジ｜デモページ</title>
-  <script type="module" crossorigin src="./index.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/main.css">
+    <script type="module" crossorigin src="./index.ts"></script>
 </head>
 <body class="bg-light">
 
@@ -27,7 +26,7 @@
                     <section class="mb-5">
                         <h3 class="h5 border-start border-4 border-primary ps-2 mb-3">デモ</h3>
                         <div class="bg-white border rounded p-3 text-center">
-                            <a class="btn btn-primary px-4" href="javascript:(function(){const%20s=document.createElement('script');s.type='module';s.src='/ts/kaiji.ts?d='+Date.now();document.body.appendChild(s);})();">
+                            <a class="btn btn-primary px-4" href="javascript:(function(){const%20s=document.createElement('script');s.type='module';s.src='https://isystk.github.io/kaiji/kaiji.js?d='+Date.now();document.body.appendChild(s);})();">
                                 ここをクリックしてみてね
                             </a>
                             <p class="form-text mt-2 mb-0">↑ このボタンをツールバーにドラッグするとブックマークレットになります。</p>
@@ -42,7 +41,7 @@
 (function(){
   const s=document.createElement('script');
   s.type='module';
-  s.src='/ts/kaiji?d='+Date.now();
+  s.src='https://isystk.github.io/kaiji/kaiji.js?d='+Date.now();
   document.body.appendChild(s);
 })();
 &lt;/script&gt;</code></pre>
