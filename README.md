@@ -1,29 +1,100 @@
-カイジ
-====
+# xss-kaiji
 
-Overview
-ざわざわした後に何かが起こります。
+![GitHub issues](https://img.shields.io/github/issues/isystk/kaiji)
+![GitHub forks](https://img.shields.io/github/forks/isystk/kaiji)
+![GitHub stars](https://img.shields.io/github/stars/isystk/kaiji)
+![GitHub license](https://img.shields.io/github/license/isystk/kaiji)
 
-## Description
+## 📗 プロジェクトの概要
 
-## Demo
-(http://demo.isystk.com/kaiji/)
+XSS（クロスサイトスクリプティング）をテーマにしたWebアプリケーション「XSSカイジ」です。セキュリティ学習やデモンストレーションを目的としています。
 
-## VS. 
+### 対象としている方
 
-## Requirement
+- Webアプリケーションのセキュリティ（XSS）に関心のある開発者
+- TypeScriptおよびViteを用いたフロントエンド開発を学びたい方
 
-## Usage
+### 利用している技術
 
-## Install
+#### インフラ / 実行環境
+- **Node.js**
+- **Vite**
 
-## Contribution
+#### 使用しているライブラリ
+- **Frontend**: TypeScript, Bootstrap, @popperjs/core
+- **Design/Tool**: FontAwesome, ESLint, Prettier
 
-## Licence
+## 🎥 デモ動画
+<video src="demo.webm" width="600" controls muted autoplay loop>
+  お使いのブラウザはビデオタグをサポートしていません。
+</video>
 
-[MIT](https://github.com/isystk/kaiji/LICENCE)
+## 📦 ディレクトリ構造
 
-## Author
+```text
+.
+├── LICENSE
+├── README.md
+├── dist
+│   ├── assets
+│   ├── images
+│   ├── index.html
+│   ├── index.js
+│   └── kaiji.js
+├── eslint.config.js
+├── package-lock.json
+├── package.json
+├── public
+│   ├── images
+│   └── index.html
+├── src
+│   ├── index.html
+│   ├── index.ts
+│   └── ts
+├── tsconfig.json
+└── vite.config.js
+```
+
+## 🔧 開発環境の構築
+
+### 前提条件
+
+* Node.js (v18.0.0 以上推奨)
+* npm または yarn
+
+### セットアップ手順
+
+1. **リポジトリのクローン**
+```bash
+git clone git@isystk-github.com:isystk/kaiji.git
+cd xss-kaiji
+```
+
+2. **環境構築**
+```bash
+npm install
+```
+
+3. **初期設定・動作確認**
+```bash
+# 開発用サーバーの起動
+npm run dev
+
+# プロダクション用ビルド
+npm run build
+```
+
+## 🎧 外部ツール・サーバー
+
+| ツール | URL | 用途 |
+| --- | --- | --- |
+| Vite | https://vitejs.dev/ | フロントエンドのビルドおよび開発サーバー |
+| FontAwesome | https://fontawesome.com/ | アイコンフォントの利用 |
+
+## 🎫 Licence
+
+[MIT](./LICENSE)
+
+## 👀 Author
 
 [isystk](https://github.com/isystk)
-
